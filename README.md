@@ -50,5 +50,7 @@ Here is the screenshot of mine:
 - then: then package-install
 - then type: d-mode
 
-NOTE: You need the Internet to download d-mode
-NOTE: If you see some other codes, put it before them
+NOTE: You need the Internet to download d-mode  
+NOTE: If you see some other codes, put it before them  
+
+For more details see  [Emacs-D-Mode](https://github.com/Emacs-D-Mode-Maintainers/Emacs-D-Mode)
