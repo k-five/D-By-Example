@@ -35,16 +35,18 @@ Here is the screenshot of mine:
 ---
 
 ## How to install d-mode on emacs:
-    - create `.emacs` in your home directory ( Linux OS )
-    - then put this code:
-        ```(require 'package)
-	(add-to-list 'package-archives
-	         '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-        (package-initialize)```
-      there. if you see some other code, put it before them
-    - then open emacs with `emacs -nw some.txt` ( any file )
-    - then: M-x package-list-packages to get to the package listing
-    - then: then package-install
-    - then type: d-mode
+- create `.emacs` in your home directory ( Linux OS )
+- then put this code:
 
-NOTE: You the Internet to download d-mode
+```(require 'package)
+   (add-to-list 'package-archives
+         '("melpa-stable" . "https://stable.melpa.org/packages/") t)
+   (package-initialize)```
+
+      there. if you see some other code, put it before them
+- then open emacs with `emacs -nw some.txt` ( any file )
+- then: M-x package-list-packages to get to the package listing
+- then: then package-install
+- then type: d-mode
+
+NOTE: You need the Internet to download d-mode
