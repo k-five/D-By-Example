@@ -57,7 +57,7 @@ For more details see  [Emacs-D-Mode](https://github.com/Emacs-D-Mode-Maintainers
 
 ---
 
-## May you like:
+## [May you like](https://tour.dlang.org/tour/en/gems/range-algorithms):
 
 ```dlang
 // Hey come on, just get the whole army!
