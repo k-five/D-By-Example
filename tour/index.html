@@ -1,0 +1,2504 @@
+<!doctype html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+
+		<title>Practical Metaprogramming</title>
+
+		<link rel="stylesheet" href="css/reveal.css">
+		<link rel="stylesheet" href="css/theme/white.css">
+
+		<!-- Theme used for syntax highlighting of code -->
+		<link rel="stylesheet" href="lib/css/vs.css">
+
+		<!-- Printing and PDF exports -->
+		<script>
+		 var link = document.createElement( 'link' );
+		 link.rel = 'stylesheet';
+		 link.type = 'text/css';
+		 link.href = window.location.search.match( /print-pdf/gi ) ? 'css/print/pdf.css' : 'css/print/paper.css';
+		 document.getElementsByTagName( 'head' )[0].appendChild( link );
+		</script>
+		<link href='https://fonts.googleapis.com/css?family=Droid+Sans+Mono' rel='stylesheet' type='text/css'>
+		<style>
+		 /* Center code samples */
+		 .reveal pre {
+			 box-shadow: none;
+			 text-align: center;
+		 }
+		 .reveal pre code {
+			 text-align: left;
+			 display: inline-block;
+		 }
+
+		 /* https://github.com/hakimel/reveal.js/issues/1386#issuecomment-216221196 */
+		 html {
+			 background-color: red !important;
+		 }
+
+		 .reveal h5 {
+			 text-transform: none;
+		 }
+
+		 .reveal code {
+			 font-variant: normal;
+			 font-weight: normal;
+			 font-family: 'Droid Sans Mono', monospace;
+		 }
+
+		 .reveal section img {
+			 border: none;
+			 box-shadow: none;
+		 }
+
+		 
+.slide-slides-00-title-md-0 footer {
+	height: 0;
+	position: absolute;
+	top: 100%;
+	padding-top: 4em;
+	font-size: 6pt;
+	width: 100%;
+}
+ .slide-slides-20-alias-20-alias-md-11 p { font-size: 75%; }  .slide-slides-30-dataimpl-30-dataimpl-md-2 img { height: 350px; }  .slide-slides-30-dataimpl-30-dataimpl-md-4 img { height: 350px; }  .slide-slides-30-dataimpl-30-dataimpl-md-9 img { height: 350px; }  .slide-slides-40-rabcdasm-40-rabcdasm-md-6 pre { font-size: 36%; } 
+.slide-slides-40-rabcdasm-40-rabcdasm-md-7 table { font-size: 60%; margin: 0 3.5em !important; }
+
+.slide-slides-40-rabcdasm-40-rabcdasm-md-10 table { font-size: 35%; margin: 0 3.5em !important; }
+
+.slide-slides-40-rabcdasm-40-rabcdasm-md-11 pre { font-size: 35%; }
+
+.slide-slides-40-rabcdasm-40-rabcdasm-md-12 pre { font-size: 45%; }
+
+.slide-slides-40-rabcdasm-40-rabcdasm-md-13 pre { 
+	font-size: 6%;
+	height: 350px;
+}
+.slide-slides-40-rabcdasm-40-rabcdasm-md-13 pre code { 
+     -webkit-column-count: 4; /* Chrome, Safari, Opera */
+    -moz-column-count: 4; /* Firefox */
+    column-count: 4;
+	height: 350px;
+}
+
+.slide-slides-40-rabcdasm-40-rabcdasm-md-16 img {
+	vertical-align: middle;
+	width: 180px;
+}
+.slide-slides-40-rabcdasm-40-rabcdasm-md-16 table {
+	width: 100%;
+	table-layout: fixed;
+}
+.slide-slides-40-rabcdasm-40-rabcdasm-md-16 td {
+	text-align: center !important;
+	font-size: 80%;
+	border-bottom: none !important;
+}
+ .slide-slides-50-fallout-50-fallout-md-6 pre { font-size: 40%; }  .slide-slides-50-fallout-50-fallout-md-7 pre { font-size: 35%; }  .slide-slides-50-fallout-50-fallout-md-8 pre { font-size: 45%; }  .slide-slides-50-fallout-50-fallout-md-9 pre { font-size: 45%; }  .slide-slides-50-fallout-50-fallout-md-10 pre { font-size: 45%; }  .slide-slides-50-fallout-50-fallout-md-12 pre { font-size: 52%; }  .slide-slides-50-fallout-50-fallout-md-13 pre { font-size: 25%; }  .slide-slides-50-fallout-50-fallout-md-16 img { height: 450px; margin-top: -30px !important; }  .slide-slides-60-imaging-70-imaging-md-1 pre { font-size: 50%; }  .slide-slides-60-imaging-70-imaging-md-2 pre { font-size: 50%; }  .slide-slides-60-imaging-70-imaging-md-3 pre { font-size: 45%; }  .slide-slides-60-imaging-70-imaging-md-4 pre { font-size: 45%; }  .slide-slides-60-imaging-70-imaging-md-5 pre { font-size: 45%; }  .slide-slides-60-imaging-70-imaging-md-6 pre { font-size: 40%; }  .slide-slides-60-imaging-70-imaging-md-7 pre { font-size: 45%; }  .slide-slides-60-imaging-70-imaging-md-8 pre { font-size: 40%; }  .slide-slides-60-imaging-70-imaging-md-9 pre { font-size: 30%; }  .slide-slides-60-imaging-70-imaging-md-10 pre { font-size: 50%; }  .slide-slides-60-imaging-70-imaging-md-11 pre { font-size: 50%; }  .slide-slides-60-imaging-70-imaging-md-12 pre { font-size: 40%; }  .slide-slides-60-imaging-70-imaging-md-14 pre { font-size: 45%; }  .slide-slides-60-imaging-70-imaging-md-15 pre { font-size: 50%; }  .slide-slides-60-imaging-70-imaging-md-17 pre { font-size: 50%; line-height: 0.8; }  .slide-slides-60-imaging-70-imaging-md-19 pre { font-size: 50%; }  .slide-slides-60-imaging-71-video-md-2 pre { font-size: 50%; }  .slide-slides-60-imaging-71-video-md-4 pre { font-size: 45%; }  .slide-slides-60-imaging-71-video-md-5 pre { font-size: 45%; }  .slide-slides-70-misc-60-misc-md-1 img { height: 350px; }  .slide-slides-70-misc-60-misc-md-3 pre { font-size: 50%; }  .slide-slides-70-misc-60-misc-md-9 pre { font-size: 25%; }  .slide-slides-70-misc-60-misc-md-10 pre { font-size: 30%; }  .slide-slides-70-misc-60-misc-md-11 pre { font-size: 30%; }  .slide-slides-70-misc-60-misc-md-12 pre { font-size: 25%; }  .slide-slides-70-misc-60-misc-md-13 pre { font-size: 22%; } 
+		</style>
+	</head>
+	<body>
+		<div class="reveal">
+			<div class="slides">
+				<section class="slide-slides-00-title-md-0" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">## Practical Metaprogramming
+
+Vladimir Panteleev
+
+DConf 2017
+
+<footer>
+All product and company names are trademarks™ or registered® trademarks of their respective holders. Use of them does not imply any affiliation with or endorsement by them.
+</footer>
+
+
+
+Notes:
+
+- Who I am
+  - "Hello"
+  - "Thank you for coming"
+  - "My name is Vladimir, and I have been using D since 2006"
+  - "I've also contributed a few things here and there"
+- People ask me "Why D? Why do you like this language so much "
+  - I'll try to answer one aspect of that in this talk
+- Scott Meyers' previous talk was titled "Things that matter"
+  - However, I haven't done anything terribly exciting last year, so
+  - "I'm going to talk about a few random **personal projects** I did over the past few years where D's metaprogramming"</script></section><section class="slide-slides-10-json-10-json-md-0" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template"># Part 1
+
+### Serialization
+
+Notes:
+
+- I'd like to start with serialization, because it's one of the things D is really good at
+
+---
+
+```d
+{ 
+	"name" : "John Doe",
+	"age" : 42
+}
+```
+## ⇕
+```d
+struct Person
+{
+	string name;
+	int age;
+}
+```
+
+Notes:
+
+- For example, let's talk about JSON
+- That is what it looks like as a refresher
+- And let's say you want to write some code that converts between JSON like that and a D struct like this
+- As far as I know it is impossible period to do in C++, 
+- but in D it's really easy, and I'll quickly show you how
+
+---
+
+```d
+string toJson(T)(T v)
+{
+   static if (is(T : const(char)[]))
+      return format("%(%s%)", v.only);
+   else
+   static if (is(T : long))
+      return format("%d", v);
+   else
+      ...
+   else
+      static assert(0, "Can't serialize " 
+         ~ T.stringof ~ " to JSON");
+}
+```
+
+Notes:
+
+- If you want to write a function to serialize an arbitrary type, you probably want to use `static if`
+- I cheat here by using std.format to serialize a JSON string like a D literal
+- You can also use std.traits or __traits
+
+---
+
+```d
+...
+else
+static if (is(T==struct))
+{
+   string s;
+   foreach (i, field; v.tupleof)
+   {
+      enum name = __traits(identifier, 
+	     v.tupleof[i])
+      s ~= format(`"%s":%s`,
+         name, toJson(field));
+      if (i+1 != v.tupleof.length)
+         s ~= ",";
+   }
+   return "{" ~ s ~ "}";
+}
+```
+
+Notes:
+
+- structs are a special case because you will want to iterate over all members
+- not very efficient because of memory allocations
+- other than tupleof there is `__traits(getMembers)`
+- must use `v.tupleof[i]` to get identifier
+
+---
+
+```d
+T jsonParse(T)(ref string s)
+{
+   static if (is(T : const(char)[]))
+      return parseJsonString(s);
+   else
+   static if (is(T : long))
+      return parse!T(s);
+   else
+      ...
+   else
+      static assert(0, "Can't parse " ~ 
+         T.stringof ~ " from JSON");
+}
+```
+
+Notes:
+
+- parsing is essentially the same as in reverse
+- `T` is specified explicitly here
+- not shown: checking if s is empty at the end
+
+---
+
+```d
+string jsonField = parseJsonString(s);
+enforce(s.skipOver(":"), ": expected");
+
+bool found; T v;
+foreach (i, ref field; v.tupleof) {
+   enum name = __traits(identifier, 
+	  v.tupleof[i]);
+   if (name == jsonField) {
+      alias F = typeof(field);
+      field = jsonParse!F(s);
+      found = true;
+      break;
+   }
+}
+enforce(found, "Unknown field " ~ 
+   jsonField);
+```
+
+Notes:
+- there's a better way to do this
+
+---
+
+```d
+sw: 
+switch (jsonField) {
+   foreach (i, ref field; v.tupleof) {
+      enum name = __traits(identifier, 
+        v.tupleof[i]);
+      case name:
+        alias F = typeof(field);
+        v.tupleof[i] = jsonParse!F(s);
+        break sw;
+   }
+   default:
+     throw new Exception(
+	   "Unknown field " ~ jsonField);
+}
+```
+
+Notes:
+- must use label for break
+
+---
+
+```d
+case "refs.json":
+{
+    struct Refs 
+    { 
+        string[] branches, tags; 
+    }
+
+    auto refs = Refs(
+        diggerQuery("branches"),
+        diggerQuery("tags"),
+    );
+
+    return conn.sendResponse(
+        resp.serveJson(refs));
+}
+```
+
+Notes:
+
+- Very convenient for AJAX applications
+- This is a fragment from the digger-web source code
+- It is very convenient to just fill a struct and send it over as JSON to the HTML/JavaScript component</script></section><section class="slide-slides-20-alias-20-alias-md-0" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template"># Part 2
+
+### alias binding
+
+Notes:
+- Talk about my attempt to write a serialization library here
+- "I need a real serialization library" -> "A week later, I was up to my neck in DMD code, I had 5 open DMD pull requests and I was trying to fix a bug in DMD's code generation backend"
+- I never did complete it, but I did come up with a few cool ideas along the way, which I'd like to show you
+- Before I get to that, I need to explain a few concepts first</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-20-alias-20-alias-md-1" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+int n = 42;
+
+void printIt(alias var)()
+{
+    writeln(var);
+}
+
+void main()
+{
+    printIt!n();
+}
+```
+
+Notes:
+`alias` works with many things (functions, types, other templates) but here I'm interested in variables</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-20-alias-20-alias-md-2" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+void printIt(alias var)()
+{
+    writeln(var);
+}
+
+void main()
+{
+    int n = 42;
+    printIt!n();
+}
+```
+
+Notes:
+- context binding</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-20-alias-20-alias-md-3" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+struct S
+{
+    int i;
+
+    void print(alias b)()
+    {
+        writeln(i, " ", b);
+    }
+}
+
+void main()
+{
+    S s;
+    int i = 13;
+    s.print!i();
+}
+```
+
+Notes:
+- Ask audience if they think this compiles</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-20-alias-20-alias-md-4" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+int[] nums = 1000.iota.array;
+int increment = 5;
+auto nums2 = std.parallelism.taskPool
+    .map!(n => n + increment)(nums);
+```
+
+Notes:
+- This is one of the more visible examples in Phobos
+- Single alias fgsfds</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-20-alias-20-alias-md-5" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+struct S
+{
+	...
+
+	static template T(alias a)
+	{
+		...
+	}
+}
+```
+
+Notes:
+- Ask audience what they think `static` does here</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-20-alias-20-alias-md-6" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+void printProps(alias a)()
+{
+   writefln(
+      "%s is a %s and is nested in %s",
+      __traits(identifier, a),
+      typeof(a).stringof,
+      __traits(identifier,
+         __traits(parent, a)),
+   );
+}
+
+void main()
+{
+   int i = 42;
+   printProps!i();
+}
+```
+
+Notes:
+- This does not use the value of `i`, only its properties</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-20-alias-20-alias-md-7" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+struct S
+{
+	...
+
+	/*static*/ template T(alias a)
+	{
+		/*static*/ void fun()
+		{
+			...
+		}
+	}
+}
+```
+
+Notes:
+- `static` here does two different things</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-20-alias-20-alias-md-8" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+int ret(alias x)()
+{
+    return x;
+}
+
+struct S
+{
+    int f;
+    int m() { return f; }
+
+    void test()
+    {
+        ret!f();
+        ret!m();
+    }
+}
+```
+
+Notes:
+- I mentioned this briefly last year
+- Ask audience if they think this compiles</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-20-alias-20-alias-md-9" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+int ret(alias x)()
+{
+    return x;
+}
+
+struct S
+{
+    int f;
+    int m() { return f; }
+
+    void test()
+    {
+        ret!f(); // OK
+        ret!m(); // Error
+    }
+}
+```
+
+Notes:
+- Quirk #1
+- Method aliases used to have context before 2.061</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-20-alias-20-alias-md-10" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+struct S
+{
+    /*static*/ template Impl(alias x)
+    {
+        static void fun()
+        {
+            writeln(x);
+        }
+    }
+}
+
+struct T
+{
+    int i;
+    alias inst = S.Impl!i;
+}
+```
+
+Notes:
+- Quirk #2
+- No matter if `static` is present or not, this won't compile</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-20-alias-20-alias-md-11" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+void bar(static alias sym)() { ... }
+```
+
+<a href="https://wiki.dlang.org/Brush_Up_Language_Features#Nested_Symbols">https://wiki.dlang.org/<br>Brush_Up_Language_Features<br>#Nested_Symbols
+
+
+
+Notes:
+- Kenji proposed this syntax</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-20-alias-20-alias-md-12" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">##### The missing operator:<br>`__traits(child)`
+
+```d
+
+struct S { string a, b, c; }
+
+void main()
+{
+	printField!(S.b)();
+}
+
+static void printField(alias field)()
+{
+	S s = getS();
+	writeln(s ??? field);
+}
+```
+
+Notes:
+- tie in context-less aliases to this
+- generally, when we want to tell a function which field in a struct to use, we use either
+  - pointers
+  - inefficient
+	- the name of the field as a string, so that it gets glued together with a mixin
+	  - hacky
+	  - problems with overloads
+	  - an alias refer to either an overload set or a specific overload, so they're strictly better
+- you could use delegates but they're limited
+- this allows easily implementing member pointers</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-20-alias-20-alias-md-13" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+static void printField(alias field)()
+{
+	S s = getS();
+	writeln(__traits(child, s, field));
+}
+```
+
+Notes:
+- this was an interesting experience
+- the compiler code is very interesting in many places</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-20-alias-20-alias-md-14" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+static void printField(alias field)()
+{
+	S s = getS();
+	writeln(s.(field));
+}
+```</script></section><section class="slide-slides-30-dataimpl-30-dataimpl-md-0" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template"># Part 3
+
+### data / impl<br>composition
+
+Notes:</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-30-dataimpl-30-dataimpl-md-1" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+struct SomeAllocator(ParentAllocator, 
+	...options...)
+{
+    static if (stateSize!ParentAllocator)
+	{
+        ParentAllocator parent;
+	}
+    else
+	{
+        alias parent = 
+			ParentAllocator.instance;
+	}
+}
+```
+
+Notes:
+- This is generally how std.experimental.allocator does compositing
+  (nesting parent allocator in the object)</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-30-dataimpl-30-dataimpl-md-2" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">![](slides/30-dataimpl/diamond.dot.svg)
+
+
+
+Notes:
+- Obligatory GraphViz slide
+- No obvious efficient way to do diamond-dependencies
+- C++ can do it with multiple inheritance</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-30-dataimpl-30-dataimpl-md-3" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+template Component(Params...)
+{
+	struct Data
+	{
+		... field declarations ...
+	}
+
+	template Impl(alias data)
+	{
+		... use data ...
+	}
+}
+```</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-30-dataimpl-30-dataimpl-md-4" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">![](slides/30-dataimpl/adder.dot.svg)
+
+</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-30-dataimpl-30-dataimpl-md-5" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+// Need static either here or on Impl
+/*static*/ template Variable(T)
+{
+	struct Data
+	{
+		T value;
+	}
+
+	static template Impl(alias data)
+	{
+		T get() { return data.value; }
+	}
+}
+```
+
+Notes:
+- you won't be able to build this with a vanilla compiler</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-30-dataimpl-30-dataimpl-md-6" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+template Adder(alias a, alias b)
+{
+	// dummy argument to set context
+	static template Impl(alias a=a)
+	{
+		auto get()
+		{
+			return a.get() + b.get();
+		}
+	}
+}
+```</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-30-dataimpl-30-dataimpl-md-7" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+struct Formula
+{
+	Variable!int.Data xData;
+	Variable!int.Data yData;
+	Variable!int.Data zData;
+
+	alias Variable!int.Impl!xData x;
+	alias Variable!int.Impl!yData y;
+	alias Variable!int.Impl!zData z;
+
+	alias Adder!(x, y).Impl!() a1;
+	alias Adder!(y, z).Impl!() a2;
+	alias Adder!(a1, a2).Impl!() a3;
+}
+```
+
+Notes:
+- Note that all the implementations have the same `this` pointer</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-30-dataimpl-30-dataimpl-md-8" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+void main()
+{
+	Formula formula;
+	formula.aData.value = 2;
+	formula.bData.value = 3;
+	formula.cData.value = 4;
+	assert(formula.a3.get() == 12);
+}
+```</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-30-dataimpl-30-dataimpl-md-9" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">![](slides/30-dataimpl/serialization.dot.svg)
+
+
+
+Notes:
+- Most serialization libraries use a common representation that they then use to serialize to
+- Usually it's the serialized objects (same as my struct), sometimes it's a DOM (same as my Variant)
+- In either case, it is some kind of in-memory state
+- In my library, the common element between all these is not the state, but the protocol
+- If I want to serialize to a given state, I can get a protocol which does this
+- This also allows building filters for processing hierarchical data</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-30-dataimpl-30-dataimpl-md-10" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">##### Code:
+
+<a href="https://github.com/CyberShadow/ae/tree/master/utils/serialization">https://github.com/CyberShadow<br>/ae/tree/master/utils/serialization</a></script></section><section class="slide-slides-40-rabcdasm-40-rabcdasm-md-0" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template"># Part 4
+
+### RABCDAsm
+
+Notes:
+- Who here likes **video games**?
+  - I like video games too,
+  - and if I particularly like a game, I will sometimes **tinker** with it
+  - This is one of my first D projects concerning game modding
+- Who here remembers **Newgrounds**?</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-40-rabcdasm-40-rabcdasm-md-1" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">### RABCDAsm
+
+<div style="text-align: left; display: inline-block">
+**R**obust  
+**A**ctionScript  
+**B**yte-  
+**C**ode  
+**D**is-  
+**As**se**m**bler
+</div>
+
+Notes:
+- RABCDAsm is short for Vladimir Is Bad At Naming Things
+- This targets specifically the bytecode for the AVM
+- AS3 was released with Flash Player 9 in 2006
+- RABCDAsm appeared in 2010
+- Explain what R means</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-40-rabcdasm-40-rabcdasm-md-2" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+class Multiname
+{
+	ASType kind;
+	union
+	{
+		QName vQName;
+		RTQName vRTQName;
+		RTQNameL vRTQNameL;
+		Multiname vMultiname;
+		MultinameL vMultinameL;
+		TypeName vTypeName;
+	}
+}
+```
+
+Notes:
+- I won't go into much detail of the file format
+- There are many types and data structures involved</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-40-rabcdasm-40-rabcdasm-md-3" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+struct Value
+{
+	ASType vkind;
+	union
+	{
+		long vint;
+		ulong vuint;
+		double vdouble;
+		string vstring;
+		Namespace vnamespace;
+	}
+}
+```</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-40-rabcdasm-40-rabcdasm-md-4" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+struct Trait
+{
+	Multiname name;
+	TraitKind kind;
+	ubyte attr;
+
+	union
+	{
+		Slot vSlot;
+		Class vClass;
+		Function vFunction;
+		Method vMethod;
+	}
+	Metadata[] metadata;
+}
+```
+
+Notes:
+- These are just a few examples
+- There are many types involved</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-40-rabcdasm-40-rabcdasm-md-5" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">- `opEquals`
+- `opCmp`
+- `toHash`
+- `toString`
+
+Notes:
+- I needed to test for equality
+- I needed to build constant pool tables
+- I needed sorting (to optimize compression)</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-40-rabcdasm-40-rabcdasm-md-6" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+static class Multiname
+{
+	...
+
+	mixin AutoCompare;
+	mixin AutoToString;
+
+	R processData(R, string prolog, string epilog, H)
+		(ref H handler) const
+	{
+		mixin(prolog);
+		mixin(addAutoField("kind"));
+		switch (kind)
+		{
+			case ASType.QName:
+			case ASType.QNameA:
+				mixin(addAutoField("vQName.ns"));
+				mixin(addAutoField("vQName.name"));
+				break;
+			...
+		}
+		mixin(epilog);
+	}
+}
+```
+
+
+
+Notes:
+- `AutoCompare` generates the `opEquals` / `opCmp` / `toHash` trinity
+- `AutoToString` generates ...
+- You could also use `processData` for serialization if you wanted to
+- I won't show the implementation because it is basically D1 code
+    - today you could also use attributes, but declarative approaches are more limited than imperative ones
+- `__cmp` - previously, it was difficult to partially calculate an object's hash - there wasn't even a way to call the hash function that the compiler used</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-40-rabcdasm-40-rabcdasm-md-7" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">#### RECT
+
+| Field | Type	    | Comment								    |
+| ----- | --------- | ----------------------------------------- |
+| Nbits | UB[5]	    | Bits used for each subsequent field	    |
+| Xmin  | SB[Nbits] | x minimum position for rectangle in twips |
+| Xmax  | SB[Nbits] | x maximum position for rectangle in twips |
+| Ymin  | SB[Nbits] | y minimum position for rectangle in twips |
+| Ymax  | SB[Nbits] | y maximum position for rectangle in twips |
+
+</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-40-rabcdasm-40-rabcdasm-md-8" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+RECT readRect()
+{
+	auto nBits = readBits(5);
+	RECT r;
+	r.Xmin = readBits(nBits);
+	r.Xmax = readBits(nBits);
+	r.Ymin = readBits(nBits);
+	r.Ymax = readBits(nBits);
+}
+```
+
+Notes:
+- Normally you'd do something like this, but then you have to **repeat it for writing**
+- more complexity if you want to implement something like the **visitor pattern**</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-40-rabcdasm-40-rabcdasm-md-9" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+mixin(makeStruct!("RECT", [
+    FieldDef("Nbits",   "UB[5]"),
+    FieldDef("Xmin",    "SB[Nbits]"),
+    FieldDef("Xmax",    "SB[Nbits]"),
+    FieldDef("Ymin",    "SB[Nbits]"),
+    FieldDef("Ymax",    "SB[Nbits]"),
+]));
+```
+
+Notes:
+- D allows us to define a DSL which allows defining the file format in a declarative manner using syntax that's very close to the specification
+- I could almost copy and paste from the specification for many types</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-40-rabcdasm-40-rabcdasm-md-10" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">#### MATRIX
+
+| Field				| Type								| Comment								    |
+| -----				| ---------							| ----------------------------------------- |
+| HasScale			| UB[1]								| Has scale values if equal to 1			|
+| NScaleBits		| If HasScale = 1, UB[5]			| Bits in each scale value field			|
+| ScaleX			| If HasScale = 1, FB[NScaleBits]	| x scale value								|
+| ScaleY			| If HasScale = 1, FB[NScaleBits]	| y scale value								|
+| HasRotate			| UB[1]								| Has rotate and skew values if equal to 1	|
+| NRotateBits		| If HasRotate = 1, UB[5]			| Bits in each rotate value field			|
+| RotateSkew0		| If HasRotate = 1, FB[NRotateBits]	| First rotate and skew value				|
+| RotateSkew1		| If HasRotate = 1, FB[NRotateBits] | Second rotate and skew value				|
+| NTranslateBits	| UB[5]								| Bits in each translate value field		|
+| TranslateX		| SB[NTranslateBits]				| x translate value in twips				|
+| TranslateY		| SB[NTranslateBits]				| y translate value in twips				|
+
+</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-40-rabcdasm-40-rabcdasm-md-11" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+mixin(makeStruct!("MATRIX", [
+    FieldDef("HasScale",       "UB[1]"),
+    FieldDef("NScaleBits",     "UB[5]",            "HasScale"),
+    FieldDef("ScaleX",         "FB[NScaleBits]",   "HasScale"),
+    FieldDef("ScaleY",         "FB[NScaleBits]",   "HasScale"),
+    FieldDef("HasRotate",      "UB[1]"),
+    FieldDef("NRotateBits",    "UB[5]",            "HasRotate"),
+    FieldDef("RotateX",        "FB[NRotateBits]",  "HasRotate"),
+    FieldDef("RotateY",        "FB[NRotateBits]",  "HasRotate"),
+    FieldDef("NTranslateBits", "UB[5]"),
+    FieldDef("TranslateX",     "FB[NTranslateBits]"),
+    FieldDef("TranslateY",     "FB[NTranslateBits]"),
+]));
+```
+
+</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-40-rabcdasm-40-rabcdasm-md-12" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+mixin(makeStruct!("DefineButton2", [
+    FieldDef("ButtonId",      "UI16"),
+    FieldDef("ReservedFlags", "UB[7]"),
+    FieldDef("TrackAsMenu",   "UB[1]"),
+    FieldDef("ActionOffset",  "UI16"),
+    FieldDef("Characters",    "BUTTONRECORD[]!"),
+    FieldDef("Actions",       "BUTTONCONDACTION[]!"),
+], q{
+    BUTTONRECORD[] readCharacters(ref ubyte[] bytes)
+    {
+        ...
+    }
+
+    BUTTONCONDACTION[] readActions(ref ubyte[] bytes)
+    {
+        ...
+    }
+}));
+```
+
+
+
+Notes:
+- The file format has many inconsistencies
+- Because D allows us to mix code and data easily, we can add custom behavior when needed</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-40-rabcdasm-40-rabcdasm-md-13" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">##### `makeStruct`
+
+```d
+static string makeStruct(string name, FieldDef[] fields,
+    string extra = null, bool noBitFlush = false)()
+{
+    if (!__ctfe)
+        return null;
+
+    size_t[string] fieldReference;
+    struct FieldProperties
+    {
+        string swfType, dType;
+        string swfSize, dSize;
+        bool needsBitFlush; // before this field
+        bool optional; // skip if end of data
+        bool customReader;
+    }
+    // +1 for needsBitFlush at the end
+    auto props = new FieldProperties[fields.length + 1];
+
+    string code;
+    code ~= "\n\n////////////////////////////////////// " ~ name ~ "\n\n\n";
+    code ~= `struct ` ~ name ~ "\n{\n";
+
+    {
+        size_t bitsPending;
+        bool varBitsPending;
+
+        void flushSlackBitField(size_t index)
+        {
+            if (varBitsPending || ((bitsPending % 8) != 0))
+            {
+                code ~= "ubyte slackBits_" ~ toDec(index) ~ ";\n";
+                props[index].needsBitFlush = true;
+
+                varBitsPending = false;
+                bitsPending = 0;
+            }
+        }
+
+        // fields
+        foreach (i, field; ArrayToTuple!fields)
+        {
+            bool duplicate = (field.name in fieldReference) !is null;
+            fieldReference[field.name] = i;
+
+            enum FieldProperties prop = () {
+                FieldProperties prop;
+                prop.swfType = field.type;
+
+                if (prop.swfType[$-1] == '?')
+                {
+                    prop.optional = true;
+                    prop.swfType = prop.swfType[0..$-1];
+                }
+                if (prop.swfType[$-1] == '!')
+                {
+                    prop.customReader = true;
+                    prop.swfType = prop.swfType[0..$-1];
+                }
+
+                auto bracketIndex = prop.swfType.indexOfElement('[');
+                if (bracketIndex < 0)
+                    prop.swfSize = "1";
+                else
+                {
+                    assert(prop.swfType[$-1] == ']');
+                    prop.swfSize = prop.swfType[bracketIndex+1..$-1];
+                    if (prop.swfSize == "")
+                        prop.swfSize = "*";
+                    prop.swfType = prop.swfType[0..bracketIndex];
+                }
+
+                return prop;
+            }();
+            props[i] = prop;
+
+            string dType;
+            string dSize = prop.swfSize;
+            bool isBitfield, isCustom;
+            switch (prop.swfType)
+            {
+                case "SI8":        dType = "byte"  ; break;
+                case "SI16":    dType = "short" ; break;
+                case "SI32":    dType = "int"   ; break;
+
+                case "BYTE":
+                case "UI8":        dType = "ubyte" ; break;
+                case "FIXED8":
+                case "FLOAT16":
+                case "UI16":    dType = "ushort"; break;
+                case "FIXED":
+                case "UI32":    dType = "uint"  ; break;
+                case "UI64":    dType = "ulong" ; break;
+
+                case "FLOAT":    dType = "float" ; break;
+                case "DOUBLE":    dType = "double"; break;
+
+                case "CHAR":    dType = "char"  ; break;
+                case "STRING":    dType = "string"; break;
+
+                case "SB":
+                case "UB":
+                case "FB":
+                {
+                    string extraBits = "";
+                    string sizeRef = dSize;
+
+                    // Parse sizes like UB[Foo+2]
+                    {
+                        auto plusIndex = sizeRef.indexOfElement('+');
+                        if (plusIndex >= 0)
+                        {
+                            extraBits = sizeRef[plusIndex..$];
+                            sizeRef = sizeRef[0..plusIndex];
+                        }
+                    }
+
+                    dSize = "1";
+                    if (prop.swfType=="UB" && sizeRef == "1")
+                    {
+                        dType = "bool";
+                        bitsPending++;
+                    }
+                    else
+                    {
+                        string bitsExpr;
+                        if (isUnsignedInteger(sizeRef))
+                        {
+                            bitsExpr = sizeRef;
+                            bitsPending += fromDec!uint(sizeRef);
+                        }
+                        else
+                        if (sizeRef in fieldReference)
+                        {
+                            varBitsPending = true;
+                            auto sizeIndex = fieldReference[sizeRef];
+                            assert(props[sizeIndex].swfType == "UB",
+                                "Size of " ~ field.name ~ " is not a UB field");
+                            auto sizeBits = fromDec!uint(props[sizeIndex].swfSize);
+                            bitsExpr = toDec((1 << sizeBits) - 1);
+                        }
+                        else
+                        //if (is(typeof(mixin(field.name ~ "_bits"))))
+                        {
+                            varBitsPending = true;
+                            bitsExpr = sizeRef ~ "_bits";
+                        }
+
+                        bitsExpr ~= extraBits;
+
+                        dType = "TypeForBits!(" ~ bitsExpr ~ ")";
+
+                        if (prop.swfType == "SB")
+                            dType = "Signed!(" ~ dType ~ ")";
+                    }
+                    isBitfield = true;
+                    break;
+                }
+                default: // other structs
+                    dType = prop.swfType;
+                    isCustom = true;
+                    break;
+            }
+
+            if (i == 0)
+            {
+                code ~= "enum needsPreBitFlush = ";
+                if (isCustom)
+                    code ~= dType ~ ".needsPreBitFlush";
+                else
+                    code ~= isBitfield ? "false" : "true";
+                code ~= ";\n";
+                code ~= "enum needsPostBitFlush = " ~
+                    (noBitFlush ? "true" : "false") ~ ";\n";
+            }
+            else
+            {
+                bool needFlush;
+                if (isBitfield)
+                    needFlush = false;
+                else
+                if (isCustom)
+                {
+                    static if (is(typeof(mixin(prop.swfType ~ ".needsPreBitFlush"))))
+                        needFlush = mixin(prop.swfType ~ ".needsPreBitFlush");
+                    else
+                        assert(false, "Not found: " ~ prop.swfType ~ ".needsPreBitFlush");
+                }
+                else
+                    needFlush = true; // non-bitfield basic type
+
+                if (needFlush)
+                    flushSlackBitField(i);
+
+                if (isCustom)
+                {
+                    static if (is(typeof(mixin(prop.swfType ~ ".needsPostBitFlush"))))
+                        varBitsPending |= mixin(prop.swfType ~ ".needsPostBitFlush");
+                    else
+                        assert(false, "Not found: " ~ prop.swfType ~ ".needsPostBitFlush");
+                }
+            }
+
+            if (props[i].optional)
+                code ~= "bool " ~ field.name ~ "_present;\n";
+
+            props[i].dType = dType;
+            props[i].dSize = dSize;
+
+            if (duplicate)
+            {
+                // Different length/layout depending on condition
+                assert(field.condition);
+            }
+            else
+            {
+                code ~= dType;
+                if (!isUnsignedInteger(dSize))
+                    code ~= `[]`;
+                else
+                if (dSize != "1")
+                    code ~= `[` ~ dSize ~ `]`;
+                code ~= ` ` ~ field.name ~ ";\n";
+            }
+        }
+
+        if (!noBitFlush)
+            flushSlackBitField(fields.length);
+    }
+
+    if (extra)
+        code ~= extra;
+
+    // Reader
+
+    {
+        void flushBitsR(size_t index)
+        {
+            if (props[index].needsBitFlush)
+            {
+                auto fieldName = "slackBits_" ~ toDec(index);
+                code ~= "\t\tthis." ~ fieldName ~ " = context.bitReader.getSlack();\n";
+            }
+        }
+
+        code ~= "\nthis(ref ubyte[] bytes)\n{\n";
+        foreach (i, field; fields)
+        {
+            if (props[i].optional)
+                code ~= "\tif (bytes.length)\n";
+
+            if (field.condition)
+                code ~= "\tif (" ~ field.condition ~ ")\n";
+
+            code ~= "\t{\n";
+
+            flushBitsR(i);
+
+            auto fieldRef = "this." ~ field.name;
+            string op = "=";
+            if (props[i].customReader)
+            {
+                code ~= "\t\t" ~ fieldRef ~ ` ` ~ op ~
+                    " this.read" ~ field.name ~ "(bytes);\n";
+                goto readEnd;
+            }
+            else
+            if (props[i].dSize == "*")
+            {
+                if (props[i].swfType == "BYTE")
+                {
+                    code ~= "\t\t" ~ fieldRef ~ ` ` ~ op ~
+                        " Reader.readRaw(bytes, bytes.length);\n";
+                    goto readEnd;
+                }
+
+                code ~= "\t\twhile (bytes.length)\n";
+                op = "~=";
+            }
+            else
+            if (!isUnsignedInteger(props[i].dSize))
+            {
+                code ~= "\t\tforeach (_; 0.."~props[i].dSize~")\n";
+                op = "~=";
+            }
+            else
+            if (props[i].dSize != "1")
+            {
+                if (props[i].swfType == "BYTE")
+                {
+                    code ~= "\t" ~ fieldRef ~ ` ` ~ op
+                        ~ ` Reader.readRaw(bytes, ` ~ props[i].dSize ~ ");\n";
+                    continue;
+                }
+
+                code ~= "\t\tforeach (ref "~field.name~"Element; "~fieldRef~")\n";
+                fieldRef = field.name~"Element";
+            }
+
+            code ~= "\t\t{\n\t\t\t" ~ fieldRef ~ ` ` ~ op ~ ` `;
+            switch (props[i].swfType)
+            {
+                case "STRING":
+                    code ~= `Reader.readString(bytes)`;
+                    break;
+                case "SB":
+                case "UB":
+                case "FB":
+                    if (props[i].dType == "bool")
+                        code ~= `context.bitReader.read(bytes)`;
+                    else
+                        code ~= `context.bitReader.read!(`~props[i].dType~`)` ~
+                            `(bytes, `~props[i].swfSize~`)`;
+                    break;
+                default:
+                    if (props[i].dType == props[i].swfType)
+                        code ~= props[i].dType~`(bytes)`;
+                    else
+                        code ~= `Reader.read!`~props[i].dType~`(bytes)`;
+                    break;
+            }
+            code ~= ";\n";
+            code ~= "\t\t\tstatic if (is(typeof(context."~name~"_"~field.name~")))" ~
+                "context."~name~"_"~field.name~" = this."~field.name~";\n";
+            code ~= "\t\t}\n"; // end loop
+        readEnd:
+            if (props[i].optional)
+                code ~= "\t\tthis."~field.name~"_present = true;\n";
+            code ~= "\t}\n"; // end cond
+        }
+        flushBitsR(fields.length);
+        code ~= "\tstatic if(is(typeof(postRead))) postRead(context);\n";
+        code ~= "}\n\n";
+    }
+
+    debug(SWFVisitor)
+    {
+        code ~= "import autodata;\n";
+        code ~= "mixin AutoToString;\n";
+        code ~= "mixin ProcessAllData;\n";
+    }
+
+    // Writer
+    {
+        void flushBitsW(size_t index)
+        {
+            if (props[index].needsBitFlush)
+                code ~= "\tbuf ~= context.bitWriter.flush(this.slackBits_" ~
+                    toDec(index) ~ ");\n";
+        }
+
+        code ~= "ubyte[] toBytes()\n{\n";
+        code ~= "\tstatic if(is(typeof(preWrite))) preWrite(context);\n";
+        code ~= "\tubyte[] buf;\n";
+        foreach (i, field; fields)
+        {
+            if (props[i].optional)
+                code ~= "\tif (" ~ field.name ~ "_present)\n";
+
+            if (field.condition)
+                code ~= "\tif (" ~ field.condition ~ ")\n";
+
+            code ~= "\t{\n";
+            flushBitsW(i);
+
+            auto fieldName = field.name;
+            if (props[i].dSize != "1")
+            {
+                if (props[i].swfType == "BYTE")
+                {
+                    code ~= "\t\t{ ";
+                    if (props[i].dSize != "*")
+                        code ~= "assert("~fieldName~".length == "~props[i].dSize~"); ";
+                    code ~= "buf ~= " ~ fieldName ~ "; }\n";
+                    goto writeEnd;
+                }
+
+                code ~= "\t\tforeach (ref "~fieldName~"Element; "~fieldName~")";
+                fieldName ~= "Element";
+            }
+
+            code ~= "\t\t{\n\t\t\tbuf ~= ";
+            switch (props[i].swfType)
+            {
+                case "STRING":
+                    code ~= `.toBytes(`~fieldName~`)`;
+                    break;
+                case "SB":
+                case "UB":
+                case "FB":
+                    if (props[i].dType == "bool")
+                        code ~= `context.bitWriter.write(`~fieldName~`)`;
+                    else
+                        code ~= `context.bitWriter.write(`~fieldName~`, ` ~
+                            props[i].swfSize~`)`;
+                    break;
+                default:
+                    if (props[i].dType == props[i].swfType)
+                        code ~= fieldName~`.toBytes()`;
+                    else
+                        code ~= `toArray(`~fieldName~`)`;
+                    break;
+            }
+            code ~= ";\n";
+            code ~= "\t\t\tstatic if (is(typeof(context."~name~"_"~field.name~")))" ~
+                "context."~name~"_"~field.name~" = this."~field.name~";\n";
+            code ~= "\t\t}\n"; // end loop
+        writeEnd:
+            code ~= "\t}\n"; // end cond
+        }
+        flushBitsW(fields.length);
+        code ~= "\treturn buf;\n";
+        code ~= "}\n"; // end writer
+    }
+
+    code ~= "}\n"; // end struct
+
+    return code;
+}
+```
+
+
+
+Notes:
+- There is a lot of code but it's pretty **boring**
+- It's essentially code generation using plain old **string concatenation**
+  - "The basic idea is to just use basic string processing to build the struct declaration, along with the reader and writer methods"
+  - "Because all the data is given to us in the FieldDefs, we don't even need to do any introspection like with JSON"
+- There is so **much code** mainly because of the number of **weirdnesses** in the file format
+- One thing stands out - mention **compilation time** as I kept adding structs</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-40-rabcdasm-40-rabcdasm-md-14" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+string code;
+code ~= `struct ` ~ name ~ "\n{\n";
+```</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-40-rabcdasm-40-rabcdasm-md-15" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+static string makeStruct(...)()
+{
+	if (!__ctfe)
+		return null;
+
+	...
+```
+
+Notes:
+- This `if` statement brought compilation time from **over an hour** to a few seconds
+- Remind what `__ctfe` does</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-40-rabcdasm-40-rabcdasm-md-16" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template"><a href="https://github.com/CyberShadow/RABCDAsm">https://github.com/<br>CyberShadow/RABCDAsm</a>
+
+<table>
+<tr><td>
+![](slides/40-rabcdasm/REMnux-logo.png)
+</td><td>
+![](slides/40-rabcdasm/f-secure_trans.png)
+</td></tr>
+<tr><td>https://remnux.org/</td><td><a href="https://github.com/F-Secure/reflash">https://github.com/<br>F-Secure/reflash</a></td></tr>
+</table>
+
+
+
+Notes:
+- REMnux = Linux Toolkit for Reverse-Engineering and Analyzing Malware
+- F-Secure ... which I think is pretty awesome, considering this started as a project for me to tinker with Flash games</script></section><section class="slide-slides-50-fallout-50-fallout-md-0" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">![](slides/50-fallout/Fallout_4_logo.png)</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-50-fallout-50-fallout-md-1" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">![](slides/50-fallout/334-0-1447396630.png)</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-50-fallout-50-fallout-md-2" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">![](slides/50-fallout/value_per_weight_cropped.png)</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-50-fallout-50-fallout-md-3" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template"># Part 5
+
+### COM instrumentation</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-50-fallout-50-fallout-md-4" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">![](slides/50-fallout/ScreenShot7.jpg)
+
+Notes:
+- Describe Upscale problem here
+- The game ran too slowly at the monitor's native resolution, and did not support lower resolutions
+- Simply changing the resolution in the basic APIs was not enough
+- The resolution was also communicated through some other API which I needed to find
+- I could've spent a lot of time debugging, but I decided to write a logger
+- Could've used IDLs, but decided to do it the D way</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-50-fallout-50-fallout-md-5" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+struct IIDLookupEntry
+{
+	IID iid;
+	void function(void*) hookFun;
+}
+```</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-50-fallout-50-fallout-md-6" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+immutable IIDLookupEntry[] iidLookup = mixin("[" ~
+	IIDLookupEntry.genCode!`csfo4.directx.d2d1` ~
+	IIDLookupEntry.genCode!`csfo4.directx.d3d11` ~
+	IIDLookupEntry.genCode!`csfo4.directx.d3d11shader` ~
+	IIDLookupEntry.genCode!`csfo4.directx.dwrite` ~
+	IIDLookupEntry.genCode!`csfo4.directx.dxgi` ~
+	IIDLookupEntry.genCode!`csfo4.directx.dxinternal` ~
+	IIDLookupEntry.genCode!`csfo4.directx.dxpublic` ~
+	IIDLookupEntry.genCode!`csfo4.directx.xaudio2` ~
+"]");
+pragma(msg, iidLookup.length);
+```
+
+</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-50-fallout-50-fallout-md-7" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+static string genCode(string moduleName)()
+{
+  string code;
+  mixin(`static import ` ~ moduleName ~ `;`);
+  mixin(`alias mod = ` ~ moduleName ~ `;`);
+  foreach (memberName; __traits(allMembers, mod))
+  {
+    enum memberFQName = moduleName ~ `.` ~ memberName;
+    mixin(`alias member = ` ~ memberFQName ~ `;`);
+    static if (is(typeof(member) : const(IID)) 
+      && memberName.startsWith("IID_"))
+    {
+      enum typeName = memberName[4..$];
+      enum typeFQName = moduleName ~ `.` ~ typeName;
+      static if (mixin(`is(` ~ typeFQName ~ `)`))
+        code ~= `IIDLookupEntry(` ~ 
+          memberFQName ~ `, ` ~ 
+          `(void* ptr) { ` ~ 
+            `return hookInterface(cast(` ~ typeFQName ~ `)ptr); ` ~ 
+          `}),` ~ '\n';
+    }
+  }
+  return code;
+}
+```
+
+
+
+Notes:
+- This iterates over all members of a **module** and collects interface IIDs into a dispatch table
+- The dispatch table contains a pointer to a function which **accepts an interface pointer** and hooks it</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-50-fallout-50-fallout-md-8" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+void hookInterface(I)(I intf)
+{
+  void** vtable = *cast(void***)intf;
+  void hookMethods(J)()
+  {
+    static if (is(J S == super) && S.length)
+    {
+      static assert(S.length == 1, 
+        "Multiple interface inheritance");
+      hookMethods!S();
+    }
+
+    foreach (member; __traits(derivedMembers, J))
+      hookMethod!(I, member)(vtable[index++]);
+  }
+
+  hookMethods!I();
+}
+```
+
+
+
+Notes:
+- We dereference the interface pointer to get the vtable pointer
+- Hook all parent types too
+- COM is single-inheritance
+- This calls `hookMethod`, which...</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-50-fallout-50-fallout-md-9" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+void hookMethod(I, string methodName)(ref void* ptr)
+{
+	alias method = __traits(getMember, I, methodName);
+	alias Fun = extern(Windows) ReturnType!method 
+		function(I, Parameters!method);
+	__gshared static Fun origFun = null;
+
+	if (ptr !is &funHook && !origFun)
+	{
+		origFun = cast(Fun)ptr;
+
+		DWORD old;
+		VirtualProtect(&ptr, (void*).sizeof, 
+			PAGE_EXECUTE_READWRITE, &old
+		).wenforce("VirtualProtect");
+
+		ptr = &funHook;
+	}
+}
+```
+
+
+
+Notes:
+- ...basically overwrites the interface pointer with our own
+- Because this will be instantiated once per hooked interface method, we can use a static variable to save the old function (`origFun`)
+- We need to set the page protection as the vtable is almost surely read-only</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-50-fallout-50-fallout-md-10" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+extern(Windows) static ReturnType!method 
+funHook(I self, Parameters!method args)
+{
+	auto result = notVoid(origFun(self, args));
+
+	logMethod!(I, method)(self, args, result);
+
+	foreach (arg; args)
+		hookArg(arg);
+
+	static if (methodName == "QueryInterface")
+	{
+		...
+	}
+
+	static if (!is(ReturnType!method == void))
+		return result;
+}
+```
+
+</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-50-fallout-50-fallout-md-11" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+static if (methodName == "QueryInterface")
+{
+	auto riid = args[0];
+	auto ppvObject = args[1];
+
+	foreach (ref entry; iidLookup)
+		if (entry.iid == *riid)
+		{
+			entry.hookFun(*ppvObject);
+			break;
+		}
+}
+```</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-50-fallout-50-fallout-md-12" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+void hookArg(T)(T value)
+{
+	static if (is(typeof(*value)))
+	{
+		alias I = typeof(*value);
+		static if (is(I == interface) &&
+		 is(I : std.c.windows.com.IUnknown))
+		{
+			if (value && *value)
+			{
+				I i = *value;
+				hookInterface(i);
+			}
+		}
+	}
+}
+```
+
+
+
+Notes:
+- The only arguments we're interested in is interface pointers</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-50-fallout-50-fallout-md-13" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+mixin template proxyFunc(alias func)
+{
+	enum name = __traits(identifier, func);
+	alias Return = ReturnType!func;
+	alias Args = Parameters!func;
+
+	alias ProxyFunc_t = typeof(&ProxyFunc);
+	ProxyFunc_t ProxyFunc_p = null;
+
+	extern(System)
+	pragma(mangle, name)
+	export
+	Return ProxyFunc(Args args)
+	{
+		if (!ProxyFunc_p)
+		{
+			if (!hmTarget)
+				loadTarget();
+			ProxyFunc_p = cast(ProxyFunc_t)
+				GetProcAddress(hmTarget, name);
+		}
+
+		auto result = ProxyFunc_p(args);
+		logFunc!func(args, result);
+		foreach (arg; args)
+			hookArg(arg);
+		return result;
+	}
+}
+
+mixin proxyFunc!D3D11CreateDeviceAndSwapChain;
+```
+
+
+
+Notes:
+- DirectX DLLs often have very few entry points, which return interfaces 
+- You can then query the interfaces or call their methods to get to the rest of the API
+- We build a proxy DLL here which **intercepts one function**
+- And so, starting from this point, we branch out and recursively intercept all Direct3D interfaces and methods
+- thus completely **instrumenting the entire Direct3D API**</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-50-fallout-50-fallout-md-14" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">![](slides/50-fallout/dxlog.png)
+
+Notes:
+
+- `RSSetViewports` is the sought function</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-50-fallout-50-fallout-md-15" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">![](slides/50-fallout/upscale.png)</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-50-fallout-50-fallout-md-16" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">![](slides/50-fallout/upscale-props.png)
+
+
+
+Notes:
+- To add to **Simon**'s list of thing using **-betterC**,
+- it also doesn't use the D runtime, and the DLL's file size is
+  just 5 and a half kilobytes. So don't let anyone tell you that you
+  can't build tiny DLLs with D, because it's just plain false.</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-50-fallout-50-fallout-md-17" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">##### Code:
+
+<a href="https://github.com/CyberShadow/csfo4">https://github.com/<br>CyberShadow/csfo4</a></script></section><section class="slide-slides-60-imaging-70-imaging-md-0" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template"># Part 6
+
+### Image Processing
+
+Notes:
+- Needed a way to programmatically create and manipulate images
+
+
+
+- Started working on my own image library
+- Redesigned it a few years ago
+- Inspired by std.algorithm and std.range
+  - Present everything as small, composable components
+  - Avoid implicit copying and prefer lazy evaluation
+  - Use templates for efficient code</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-60-imaging-70-imaging-md-1" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+
+/// A view is any type which provides a width,
+/// height, and can be indexed to get the
+/// color at a specific coordinate.
+enum isView(T) =
+    is(typeof(T.init.w) : size_t) && // width
+    is(typeof(T.init.h) : size_t) && // height
+    is(typeof(T.init[0, 0])     );   // pixels
+```
+
+
+
+Notes:
+- Like isInputRange</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-60-imaging-70-imaging-md-2" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+/// Returns the color type of the specified view.
+alias ViewColor(T) = typeof(T.init[0, 0]);
+```
+
+
+
+Notes:
+- Like std.range.ElementType</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-60-imaging-70-imaging-md-3" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+/// Views can be read-only or writable.
+enum isWritableView(T) =
+    isView!T &&
+    is(typeof(T.init[0, 0] = ViewColor!T.init));
+ 
+/// Optionally, a view can also provide direct pixel
+/// access. We call these "direct views".
+enum isDirectView(T) =
+    isView!T &&
+    is(typeof(T.init.scanline(0)) : ViewColor!T[]);
+```
+
+
+
+Notes:
+- These are specializations
+- Same as `isForwardRange` (from `std.range`)
+- DirectView provides a memory slice of pixels</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-60-imaging-70-imaging-md-4" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+/// Mixin which implements view primitives on top of
+/// existing direct view primitives.
+mixin template DirectView()
+{
+    alias COLOR = typeof(scanline(0)[0]);
+ 
+    /// Implements the view[x, y] operator.
+    ref COLOR opIndex(int x, int y)
+    {
+        return scanline(y)[x];
+    }
+ 
+    /// Implements the view[x, y] = c operator.
+    COLOR opIndexAssign(COLOR value, int x, int y)
+    {
+        return scanline(y)[x] = value;
+    }
+}
+```
+
+
+
+Notes:
+- We can implement pixel access on top of scanlines</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-60-imaging-70-imaging-md-5" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+/// An in-memory image.
+/// Pixels are stored in a flat array.
+struct Image(COLOR)
+{
+    int w, h;
+    COLOR[] pixels;
+ 
+    /// Returns an array for the pixels at row y.
+    COLOR[] scanline(int y)
+    {
+        assert(y>=0 && y<h);
+        return pixels[w*y..w*(y+1)];
+    }
+ 
+    mixin DirectView;
+ 
+	...
+}
+```
+
+
+
+Notes:
+- Most of the library is lazy, but we do need to be able to actually store pixels in memory</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-60-imaging-70-imaging-md-6" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+/// Returns a view which calculates pixels
+/// on-demand using the specified formula.
+template procedural(alias formula)
+{
+    alias fun = binaryFun!(formula, "x", "y");
+    alias COLOR = typeof(fun(0, 0));
+ 
+    auto procedural(int w, int h)
+    {
+        struct Procedural
+        {
+            int w, h;
+ 
+            auto ref COLOR opIndex(int x, int y)
+            {
+                return fun(x, y);
+            }
+        }
+        return Procedural(w, h);
+    }
+}
+```
+
+
+
+Notes:
+- This wraps a function that takes a coordinate pair and maps it to a color</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-60-imaging-70-imaging-md-7" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+/// Returns a view of the specified dimensions
+/// and same solid color.
+auto solid(COLOR)(COLOR c, int w, int h)
+{
+    return procedural!((x, y) => c)(w, h);
+}
+```
+
+
+
+Notes:
+- The simplest procedural image</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-60-imaging-70-imaging-md-8" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+/// Mixin which implements view primitives on
+/// top of another view, using a coordinate 
+/// transform function.
+mixin template Warp(V)
+{
+    V src;
+ 
+    auto ref ViewColor!V opIndex(int x, int y)
+    {
+        warp(x, y);
+        return src[x, y];
+    }
+ 
+    static if (isWritableView!V)
+    ViewColor!V opIndexAssign(ViewColor!V 
+		value, int x, int y)
+    {
+        warp(x, y);
+        return src[x, y] = value;
+    }
+}
+```
+
+
+
+Notes:
+- Here is another mixin which uses a supplied `warp` function
+- `warp` is to modify the given coordinates somehow</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-60-imaging-70-imaging-md-9" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+/// Crop a view to the specified rectangle.
+auto crop(V)(auto ref V src, int x0, int y0, int x1, int y1)
+    if (isView!V)
+{
+    static struct Crop
+    {
+        mixin Warp!V;
+
+        int x0, y0, x1, y1;
+        @property int w() { return x1-x0; }
+        @property int h() { return y1-y0; }
+ 
+        void warp(ref int x, ref int y)
+        {
+            x += x0;
+            y += y0;
+        }
+
+        static if (isDirectView!V)
+        ViewColor!V[] scanline(int y)
+        {
+            return src.scanline(y0+y)[x0..x1];
+        }
+    }
+
+    static assert(isDirectView!V == isDirectView!Crop);
+
+    return Crop(src, x0, y0, x1, y1);
+}
+```
+
+
+
+Notes:
+- Cropping a view is simply shrinking its weight and height, and shifting the coordinates by some amount</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-60-imaging-70-imaging-md-10" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+/// Return a view of src with the coordinates
+/// transformed according to the given formulas
+template warp(string xExpr, string yExpr)
+{
+    auto warp(V)(auto ref V src)
+        if (isView!V)
+    {
+        static struct Warped
+        {
+			...
+        }
+ 
+        return Warped(src);
+    }
+}
+```
+
+
+
+Notes:
+- For simple transformations which do not change the view size, we can define a helper function that simply applies a user-specified formula to each pixel’s coordinates:</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-60-imaging-70-imaging-md-11" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+static struct Warped
+{
+	mixin Warp!V;
+
+	@property int w() { return src.w; }
+	@property int h() { return src.h; }
+
+	void warp(ref int x, ref int y)
+	{
+		auto nx = mixin(xExpr);
+		auto ny = mixin(yExpr);
+		x = nx; y = ny;
+	}
+
+	...
+}
+```
+
+</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-60-imaging-70-imaging-md-12" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+static struct Warped
+{
+	...
+
+	private void testWarpY()()
+	{
+		int y;
+		y = mixin(yExpr);
+	}
+
+	/// If the x coordinate is not affected and y does not
+	/// depend on x, we can transform entire scanlines.
+	static if (xExpr == "x" &&
+		__traits(compiles, testWarpY()) &&
+		isDirectView!V)
+	ViewColor!V[] scanline(int y)
+	{
+		return src.scanline(mixin(yExpr));
+	}
+}
+```
+
+</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-60-imaging-70-imaging-md-13" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+/// Return a view of src
+/// with the x coordinate inverted.
+alias hflip = warp!(q{w-x-1}, q{y});
+ 
+/// Return a view of src
+/// with the y coordinate inverted.
+alias vflip = warp!(q{x}, q{h-y-1});
+ 
+/// Return a view of src
+/// with both coordinates inverted.
+alias flip = warp!(q{w-x-1}, q{h-y-1});
+```</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-60-imaging-70-imaging-md-14" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+/// Swap the X and Y axes (flip the image diagonally).
+auto flipXY(V)(auto ref V src)
+{
+	static struct FlipXY
+	{
+		mixin Warp!V;
+
+		@property int w() { return src.h; }
+		@property int h() { return src.w; }
+
+		void warp(ref int x, ref int y)
+		{
+			import std.algorithm;
+			swap(x, y);
+		}
+	}
+
+	return FlipXY(src);
+}
+```
+
+</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-60-imaging-70-imaging-md-15" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+/// Rotate a view 90 degrees clockwise.
+auto rotateCW(V)(auto ref V src)
+{
+	return src.flipXY().hflip();
+}
+```
+
+
+
+Notes:
+- because of the optimization, vflip of an image in memory will still allow scanline access
+- 4x rotateCW = no-op</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-60-imaging-70-imaging-md-16" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+auto img = Image!char(20, 20);
+img.fill(' ');
+img.fillCircle(10, 10, 10, '#');
+img.fillCircle( 6, 6, 2, ' ');
+img.fillCircle(14, 6, 2, ' ');
+img.fillSector(10, 10, 6, 8, 0, PI, ' ');
+
+img.h
+    .iota
+    .map!(y => img.scanline(y))
+    .each!writeln;
+```
+
+Notes:
+- This approach allows doing silly things like using a colorspace of char
+- Who knows what this will print?</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-60-imaging-70-imaging-md-17" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```
+                    
+      #########     
+     ###########    
+   ###############  
+   ###############  
+  ###   #####   ### 
+ ####   #####   ####
+ ####   #####   ####
+ ###################
+ ###################
+ ##  ###########  ##
+ ##  ###########  ##
+ ##  ###########  ##
+ ##  ###########  ##
+ ###  #########  ###
+  ##   #######   ## 
+   ##           ##  
+   ####       ####  
+     ###########    
+      #########     
+```
+
+</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-60-imaging-70-imaging-md-18" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+enum W = 4096;
+
+const FG = L16(0);
+const BG = L16(ushort.max);
+
+auto image = Image!L16(W, W);
+image.fill(BG);
+
+enum OUTER = W/2 * 16/16;
+enum INNER = W/2 * 13/16;
+enum THICK = W/2 *  3/16;
+```</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-60-imaging-70-imaging-md-19" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+image.fillCircle(W/2, W/2, OUTER, FG);
+image.fillCircle(W/2, W/2, INNER, BG);
+image.fillRect(0, W/2-INNER, W/2, W/2+INNER, BG);
+image.fillRect(W/2-THICK/2, W/2-INNER, 
+	W/2+THICK/2, W/2+INNER, FG);
+
+enum frames = 32;
+foreach (n; frames.iota.parallel)
+	image
+	.rotate(TAU * n / frames, BG)
+	.copy
+	.downscale!(W/256)
+	.lum2pix(gammaRamp!(ushort, ubyte,
+		ColorSpace.sRGB))
+	.toPNG
+	.toFile("loading-%02d.png".format(n++));
+```
+
+</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-60-imaging-70-imaging-md-20" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">![](slides/60-imaging/loading.gif)
+
+Notes:
+- this is a GIF, but we can also work with video directly
+- a video is basically a series of frames
+- you could interface with ffmpeg API, but I was **lazy and I used std.process**</script></section><section class="slide-slides-60-imaging-71-video-md-0" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+auto pipes = pipe();
+output = pipes.readEnd();
+pid = spawnProcess([
+	"ffmpeg",
+	"-loglevel", "panic",
+	"-i", "-",
+	"-an",
+	"-vcodec", "bmp",
+	"-f", "image2pipe",
+	] ~ ffmpegArgs ~ [
+	fn
+], f, pipes.writeEnd);
+```
+
+Notes:
+- This is reading</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-60-imaging-71-video-md-1" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+auto pipes = pipe();
+output = pipes.writeEnd;
+pid = spawnProcess([
+	"ffmpeg",
+	] ~ inputArgs ~ [
+	"-f", "image2pipe",
+	"-i", "-",
+	] ~ ffmpegArgs ~ [
+	fn
+], pipes.readEnd, f);
+```
+
+Notes:
+- This is writing
+- There are actually advantages to using piping, in that this distributes the work among different processes
+- You could do std.concurrency message passing, but this is much easier</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-60-imaging-71-video-md-2" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+auto decoder = VideoInputStream("input.mp4");
+auto encoder = VideoOutputStream("output.mp4");
+
+while (!encoder.empty)
+{
+	encoder.put(decoder.front);
+	decoder.popFront();
+}
+```
+
+</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-60-imaging-71-video-md-3" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+auto p = pipe();
+auto youtubeDl = spawnProcess([
+		"youtube-dl", "-o", "-",
+		"https://www.youtube.com/" ~ 
+			"user/sociomantic/live",
+	], stdin, p.writeEnd);
+auto decoder = streamVideo(p.readEnd);
+auto encoder = VideoOutputStream(
+	"output.mp4", ["-y", 
+		"-framerate", "29.97"]);
+```</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-60-imaging-71-video-md-4" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+auto dman = dmen[frameNumber / 10 % $];
+auto bx = frame.w-dman.w;
+auto by = frame.h-dman.h;
+frame
+	.blend(
+		dman      .border(0, by, bx, 0, BGRA.init),
+		dman.hflip.border(bx, by, 0, 0, BGRA.init),
+	)
+	.copy(frame);
+```
+
+
+
+Notes:
+
+- We fit the d-man to the frame size
+- Since blend is lazy, we have to copy the result somewhere, so we copy it back over the frame itself</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-60-imaging-71-video-md-5" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+"/home/vladimir/irclogs/freenode/#d/%s.log"
+	.format(Clock.currTime().formatTime!"Y-m-d")
+	.readText()
+	.splitLines()
+	.retro
+	.take(10)
+	.enumerate
+	.each!((index, line) => frame.drawBWText(
+			0, frame.h - (1 + index) * font8x8.height,
+			line, font8x8, BGR.white));
+```
+
+</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-60-imaging-71-video-md-6" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template"><video controls src="slides/60-imaging/live-/video.mp4"></script></section><section class="slide-slides-70-misc-60-misc-md-0" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template"># Part 7
+
+### Bonus slides
+
+Notes:
+- All right! Let's go over some small unclassifiables.</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-70-misc-60-misc-md-1" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">![](slides/70-misc/wa.png)
+
+
+
+Notes:
+- Who remembers this game?
+- What's it called?
+  - Not Worms 2: more weapons
+  - Not WWP: transparent team names
+- I've been the maintainer of Worms Armageddon since 2006 (which is
+  almost exactly as long as I've been using D)
+- We use D for a number of things in W:A, but here I'd like to mention one use case
+- (configuration of build tool)
+- I iterated through probably 5 designs before finally arriving at a satisfying one</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-70-misc-60-misc-md-2" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+only(1, "foo").each!writeln;
+```
+
+Notes:
+- Why doesn't this work?
+- Have you ever wanted to have ranges with heterogeneous types?
+- Essentially do range operations on tuples?</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-70-misc-60-misc-md-3" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+struct A { int x = 1; }
+struct B { enum x = 2; }
+struct C { @property int x() { return 3; } }
+struct D { static int x = -7; }
+
+int sum = 0;
+
+auto c1 = chainFunctor!((s)
+    { sum += s.x; return false; });
+auto c2 = chainFilter!(s => s.x >= 0)(c1);
+auto c3 = chainIterator(c2);
+
+c3(A(), B(), C(), D());
+
+assert(sum == 6);
+```
+
+
+
+Notes:
+- D lets you do that!
+- chainFunctor and chainFilter bind a lambda to a type
+- No problem! Next slide!</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-70-misc-60-misc-md-4" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">##### Code:
+
+<a href="https://github.com/CyberShadow/ae/blob/master/utils/meta/chain.d">https://github.com/<br>CyberShadow/ae/blob/<br>master/utils/meta/chain.d</a></script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-70-misc-60-misc-md-5" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">![](slides/70-misc/infinifactory.jpg)</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-70-misc-60-misc-md-6" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">![](slides/70-misc/kingdomrush.jpg)</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-70-misc-60-misc-md-7" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">![](slides/70-misc/ccn.jpg)</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-70-misc-60-misc-md-8" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">![](slides/70-misc/unity-logo.png)</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-70-misc-60-misc-md-9" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+/// Map a composite type's values using func
+inout(R) fmap(alias func, R, T)(ref inout(T) v)
+{
+    static if (is(T == struct))
+    {
+        R result;
+        foreach (i, ref f; v.tupleof)
+            result.tupleof[i] = cast(DeepUnqual!(typeof(func(f))))func(f);
+        return cast(inout)result;
+    }
+    else
+    static if (is(T U : U*))
+        return v ? [func(*v)].ptr : null;
+    else
+    static if (is(T : A[n], A, size_t n))
+    {
+        R result;
+        foreach (i, ref inout(A) a; v)
+            result[i] = cast()func(a);
+        return result;
+    }
+    else
+    static if (is(T A : A[]))
+    {
+        alias E = typeof(R.init[0]);
+        R result = new E[v.length];
+        foreach (i, ref inout(A) a; v)
+            result[i] = cast(DeepUnqual!(typeof(func(a))))func(a);
+        return cast(inout)result;
+    }
+    else
+        static assert(false, "Don't know how to fmap " ~ T.stringof
+            ~ " (to " ~ R.stringof ~ ")");
+}
+```
+
+</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-70-misc-60-misc-md-10" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+/// Convert a composite type such that all of its direct subtypes are
+/// replaced with Tpl!T
+template TypeMap(T, alias Tpl)
+{
+    static if (is(T == Tpl!U, U)) // Almost always a mistake
+        static assert(false, "Recursive TypeMap of " ~ T.stringof);
+    else
+    static if (is(T == struct))
+        struct TypeMap { mixin(mixTypeMapStruct!(T, q{Tpl})); }
+    else
+    static if (is(T U : U*))
+        alias TypeMap = Tpl!U*;
+    else
+    static if (is(T : A[n], A, size_t n))
+        alias TypeMap = Tpl!A[n];
+    else
+    static if (is(T A : A[]))
+        alias TypeMap = Tpl!A[];
+    else
+        static assert(false, "Don't know how to TypeMap " ~ T.stringof);
+}
+```
+
+
+
+Notes:
+- TypeMap is only really needed because of recursive types</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-70-misc-60-misc-md-11" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+/// Convert a composite type such that all of its direct subtypes are
+/// replaced with Tpl!T
+template TypeMap(T, alias Tpl)
+{
+    static if (is(T == Tpl!U, U)) // Almost always a mistake
+        static assert(false, "Recursive TypeMap of " ~ T.stringof);
+    else
+    static if (is(T == struct))
+        struct TypeMap { mixin(mixTypeMapStruct!(T, q{Tpl})); }
+    else
+    static if (is(T U : U*))
+        alias TypeMap = Tpl!U*;
+    else
+    static if (is(T : A[n], A, size_t n))
+        alias TypeMap = Tpl!A[n];
+    else
+    static if (is(T A : A[]))
+        alias TypeMap = Tpl!A[];
+    else
+        static assert(false, "Don't know how to TypeMap " ~ T.stringof);
+}
+```
+
+
+
+Notes:
+- TypeMap is only really needed because of recursive types</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-70-misc-60-misc-md-12" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+/// A recursively-converting implementation of Maybe
+struct Maybe(T)
+{
+    private Maybify!T _maybeValue;
+    private bool _maybeIsSet;
+
+    this(ref T value)
+    {
+        this = value;
+    }
+
+    void opAssign()(auto ref T value)
+    {
+        this._maybeValue = maybify(value);
+        this._maybeIsSet = true;
+    }
+
+    static if (!is(T == Maybify!T))
+    void opAssign(ref Maybify!T value)
+    {
+        this._maybeValue = value;
+        this._maybeIsSet = true;
+    }
+
+    ref inout(Maybify!T) _maybeGetValue() inout @property
+    {
+        assert(_maybeIsSet,
+            "This %s is not set".format(T.stringof));
+        return _maybeValue;
+    }
+
+    alias _maybeGetValue this;
+}
+```
+
+</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-70-misc-60-misc-md-13" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template">```d
+/// Convert a type such that all of its subtypes are replaced with Maybe!T
+private template Maybify(T)
+{
+    static assert(is(Unqual!T == T), "Qualified Maybify: " ~ T.stringof);
+    static if (is(T == Maybe!U, U))
+        static assert(false, "Can't Maybify a " ~ T.stringof);
+    else
+    static if (is(T == struct) || is(T == union))
+    {
+        struct Maybify
+        {
+            mixin(mixTypeMapStruct!(T, q{Maybe}));
+
+            this(ref T value)
+            {
+                this = value;
+            }
+
+            void opAssign(ref T value)
+            {
+                foreach (i, ref f; this.tupleof)
+                {
+                    f._maybeValue = maybify(value.tupleof[i]);
+                    f._maybeIsSet = true;
+                }
+            }
+        }
+    }
+    else
+    static if (__traits(isArithmetic, T))
+        alias Maybify = T;
+    else
+    static if (is(T AA == AA[]) && __traits(isArithmetic, AA))
+        alias Maybify = AA[];
+    else
+        alias Maybify = TypeMap!(T, Maybe);
+}
+```
+
+</script></section>
+<!-- ------------------------------ -->
+<section class="slide-slides-70-misc-60-misc-md-14" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template"><a href="https://github.com/CyberShadow/rclidasm">https://github.com/<br>CyberShadow/rclidasm</a></script></section><section class="slide-slides-95-end-md-0" data-markdown data-separator="^\n---\n$" data-separator-vertical="^\n--\n$" data-separator-notes="^Notes:"><script type="text/template"># End</script></section>
+			</div>
+		</div>
+
+		<script src="lib/js/head.min.js"></script>
+		<script src="js/reveal.js"></script>
+
+		<script>
+		 var isDebug = false;
+		 var slideWidth = 600;
+
+		 // More info https://github.com/hakimel/reveal.js#configuration
+		 Reveal.initialize({
+			 controls: false,
+			 history: true,
+			 transition: 'none',
+
+			 width: slideWidth,
+			 height: slideWidth / 5 * 4,
+
+			 minScale: 0.001,
+			 maxScale: 1000,
+
+			 margin: 0.01,
+
+			 // More info https://github.com/hakimel/reveal.js#dependencies
+			 dependencies: [
+				 { src: 'plugin/markdown/marked.js' },
+				 { src: 'plugin/markdown/markdown.js' },
+				 { src: 'plugin/notes/notes.js', async: true },
+				 { src: 'plugin/highlight/highlight.js', async: true, callback: function() { hljs.initHighlightingOnLoad(); } }
+			 ]
+		 });
+
+		 // Navigate with mouse clicks (clicker compatibility)
+		 function enableMouseNavigation()
+		 {
+			 var handleClick = function(e) {
+				 e.preventDefault();
+				 if(e.button === 0) Reveal.next();
+				 if(e.button === 2) Reveal.prev();
+			 }
+
+			 window.addEventListener("mousedown", handleClick, false);
+			 window.addEventListener("contextmenu", function(e) { e.preventDefault(); }, false);
+		 }
+
+		 if (isDebug) {
+		 	 document.getElementsByClassName('slides')[0].style.outline = '1px solid black';
+		 } else {
+			 enableMouseNavigation();
+		 }
+
+		 Reveal.addEventListener( 'slidechanged', function( event ) {
+			 if (event.previousSlide)
+			 Array.prototype.forEach.call(event.previousSlide.getElementsByTagName('video'), function(v) {
+				 v.pause();
+			 });
+			 if (event.currentSlide)
+			 Array.prototype.forEach.call(event.currentSlide.getElementsByTagName('video'), function(v) {
+				 v.play();
+			 });
+			 // event.previousSlide, event.currentSlide, event.indexh, event.indexv
+		 } );
+
+		 setTimeout(function() {
+			 Array.prototype.forEach.call(document.getElementsByTagName('video'), function(v) {
+				 v.addEventListener('ended', function() {
+					 v.src = v.src.split("?")[0] + '?' + Math.random();
+					 v.play();
+				 }, false);
+			 });
+		 }, 1000);
+		</script>
+	</body>
+</html>
