@@ -41,7 +41,8 @@ Here is the screenshot of mine:
 ```(require 'package)
    (add-to-list 'package-archives
          '("melpa-stable" . "https://stable.melpa.org/packages/") t)
-   (package-initialize)```
+   (package-initialize)
+   ```
 
 
 - then open emacs with `emacs -nw some.txt` ( any file )
