@@ -43,10 +43,11 @@ Here is the screenshot of mine:
          '("melpa-stable" . "https://stable.melpa.org/packages/") t)
    (package-initialize)```
 
-      there. if you see some other code, put it before them
+
 - then open emacs with `emacs -nw some.txt` ( any file )
 - then: M-x package-list-packages to get to the package listing
 - then: then package-install
 - then type: d-mode
 
 NOTE: You need the Internet to download d-mode
+NOTE: If you see some other codes, put it before them
